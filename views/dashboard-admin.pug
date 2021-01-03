@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  h1= title
+  input(id="inputData" style="display: none;" type='text' value=dData)
+  div(class='row')
+    div(class="col-md-6") 
+      table(class='table')
+        thead
+          tr
+            th Beban
+            th Arus
+            th Tegangan
+            th Switch
+          tr
+            td R
+            td #{dData.r_arus}
+            td #{dData.r_tegangan}
+            if dData.status_r
+                td on
+            else
+                td off
+          tr
+            td S
+            td #{dData.s_arus}
+            td #{dData.s_tegangan}
+            if dData.status_s
+                td on
+            else
+                td off
+          tr
+            td T
+            td #{dData.t_arus}
+            td #{dData.t_tegangan}
+            if dData.status_t
+                td on
+            else
+                td off
+    
+  p Notes : 
+  input(type='text' value=dData.notes)
+  input(type='button' value='Submit')
+
+  script(src="/javascripts/bundle.js")
+  script(src="/javascripts/main.js")
