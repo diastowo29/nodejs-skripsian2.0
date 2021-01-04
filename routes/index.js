@@ -29,6 +29,19 @@ router.post('/ping', function(req, res, next) {
         status_t: preStatus,
         notes: "sample notes"
       })
+    } else {
+      status_table.update({
+        r_arus: rArus,
+        r_tegangan: rTegangan,
+        s_arus: sArus,
+        s_tegangan: sTegangan,
+        t_arus: tArus,
+        t_tegangan: tTegangan
+      }, {
+        where: {
+          id: statusTableAll[0].id
+        }
+      });
     }
     res.status(200).send({
       status: statusTableAll[0]
