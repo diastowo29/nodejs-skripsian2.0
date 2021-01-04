@@ -37,7 +37,11 @@ router.post('/ping', function(req, res, next) {
 });
 
 router.get('/dashboard', function(req, res, next) {
-  res.render('dashboard');
+  status_table.findAll().then(statusTableAll => {
+    res.render('dashboard', {
+      dData: statusTableAll[0]
+    });
+  })
 });
 
 router.get('/dashboard-admin', function(req, res, next) {
@@ -49,6 +53,7 @@ router.get('/dashboard-admin', function(req, res, next) {
 });
 
 router.post('/update', function(req, res, next) {
+  console.log(req.body)
   status_table.findAll().then(statusTableAll => {
     if (statusTableAll.length == 0) {
       console.log('null')
@@ -57,7 +62,7 @@ router.post('/update', function(req, res, next) {
         status_r: req.body.status_r,
         status_s: req.body.status_s,
         status_t: req.body.status_t,
-        notes: req.param.notes
+        notes: req.body.notes
       }, {
         where: {
           id: statusTableAll[0].id
