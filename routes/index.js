@@ -49,6 +49,48 @@ router.post('/ping', function(req, res, next) {
   });
 });
 
+router.get('/ping/:r_arus/:r_tegangan/:s_arus/:s_tegangan/:t_arus/:t_tegangan', function(req, res, next) {
+  var rArus = req.params.r_arus;
+  var rTegangan = req.params.r_tegangan;
+  var sArus = req.params.s_arus;
+  var sTegangan = req.params.s_tegangan;
+  var tArus = req.params.t_arus;
+  var tTegangan = req.params.t_tegangan;
+  status_table.findAll().then(statusTableAll => {
+    var preStatus = false;
+    if (statusTableAll.length == 0) {
+      status_table.create({
+        r_arus: rArus,
+        r_tegangan: rTegangan,
+        s_arus: sArus,
+        s_tegangan: sTegangan,
+        t_arus: tArus,
+        t_tegangan: tTegangan,
+        status_r: preStatus,
+        status_s: preStatus,
+        status_t: preStatus,
+        notes: "sample notes"
+      })
+    } else {
+      status_table.update({
+        r_arus: rArus,
+        r_tegangan: rTegangan,
+        s_arus: sArus,
+        s_tegangan: sTegangan,
+        t_arus: tArus,
+        t_tegangan: tTegangan
+      }, {
+        where: {
+          id: statusTableAll[0].id
+        }
+      });
+    }
+    res.status(200).send({
+      status: statusTableAll[0]
+    });
+  });
+})
+
 router.get('/dashboard', function(req, res, next) {
   status_table.findAll().then(statusTableAll => {
     res.render('dashboard', {
