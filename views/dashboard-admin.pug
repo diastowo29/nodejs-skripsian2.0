@@ -17,25 +17,31 @@ block content
             td #{dData.r_arus}
             td #{dData.r_tegangan}
             if dData.status_r
-                td on
+                td 
+                  input(type="checkbox" checked data-toggle="toggle")
             else
-                td off
+                td 
+                  input(type="checkbox" data-toggle="toggle")
           tr
             td S
             td #{dData.s_arus}
             td #{dData.s_tegangan}
             if dData.status_s
-                td on
+                td 
+                  input(type="checkbox" checked data-toggle="toggle")
             else
-                td off
+                td 
+                  input(type="checkbox" data-toggle="toggle")
           tr
             td T
             td #{dData.t_arus}
             td #{dData.t_tegangan}
             if dData.status_t
-                td on
+                td 
+                  input(type="checkbox" checked data-toggle="toggle")
             else
-                td off
+                td 
+                  input(type="checkbox" data-toggle="toggle")
     
   p Notes : 
   input(type='text' value=dData.notes)

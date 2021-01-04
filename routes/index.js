@@ -42,7 +42,6 @@ router.get('/dashboard', function(req, res, next) {
 
 router.get('/dashboard-admin', function(req, res, next) {
   status_table.findAll().then(statusTableAll => {
-    console.log(statusTableAll)
     res.render('dashboard-admin', {
       dData: statusTableAll[0]
     });
@@ -51,7 +50,6 @@ router.get('/dashboard-admin', function(req, res, next) {
 
 router.post('/update', function(req, res, next) {
   status_table.findAll().then(statusTableAll => {
-    console.log(statusTableAll)
     if (statusTableAll.length == 0) {
       console.log('null')
     } else {
