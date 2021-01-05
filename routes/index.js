@@ -119,7 +119,11 @@ router.get('/ping-off/:status_r/:status_s/:status_t', function (req, res, next) 
       });
     }
     res.status(200).send({
-      status: statusTableAll[0]
+      status: {
+        status_r: status_r,
+        status_s: status_s,
+        status_t: status_t
+      }
     });
   });
 })
