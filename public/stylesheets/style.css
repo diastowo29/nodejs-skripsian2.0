@@ -3,6 +3,11 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+.toggle-off.btn {
+  background-color: red;
+  color: white;
+}
+
 a {
   color: #00B7FF;
 }
