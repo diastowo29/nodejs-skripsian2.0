@@ -86,6 +86,39 @@ router.get('/ping/:r_arus/:r_tegangan/:s_arus/:s_tegangan/:t_arus/:t_tegangan', 
       });
     }
     res.status(200).send({
+      status: {
+        r_arus: rArus,
+        r_tegangan: rTegangan,
+        s_arus: sArus,
+        s_tegangan: sTegangan,
+        t_arus: tArus,
+        t_tegangan: tTegangan,
+        status_r: statusTableAll[0].status_r,
+        status_s: statusTableAll[0].status_s,
+        status_t: statusTableAll[0].status_t,
+        notes: statusTableAll[0].notes
+      }
+    });
+  });
+})
+
+router.get('/ping-off/:status_r/:status_s/:status_t', function (req, res, next) {
+  var status_r = req.params.status_r;
+  var status_s = req.params.status_s;
+  var status_t = req.params.status_t;
+  status_table.findAll().then(statusTableAll => {
+    if (statusTableAll.length != 0) {
+      status_table.update({
+        status_r: status_r,
+        status_s: status_s,
+        status_t: status_t
+      }, {
+        where: {
+          id: statusTableAll[0].id
+        }
+      });
+    }
+    res.status(200).send({
       status: statusTableAll[0]
     });
   });
