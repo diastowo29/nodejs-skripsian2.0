@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { status_table } = require('../sequelize')
+const { statusV2_table } = require('../sequelize')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -14,10 +14,10 @@ router.post('/ping', function(req, res, next) {
   var sTegangan = req.body.s.tegangan;
   var tArus = req.body.t.arus;
   var tTegangan = req.body.t.tegangan;
-  status_table.findAll().then(statusTableAll => {
+  statusV2_table.findAll().then(statusTableAll => {
     var preStatus = false;
     if (statusTableAll.length == 0) {
-      status_table.create({
+      statusV2_table.create({
         r_arus: rArus,
         r_tegangan: rTegangan,
         s_arus: sArus,
@@ -30,7 +30,7 @@ router.post('/ping', function(req, res, next) {
         notes: "sample notes"
       })
     } else {
-      status_table.update({
+      statusV2_table.update({
         r_arus: rArus,
         r_tegangan: rTegangan,
         s_arus: sArus,
@@ -56,10 +56,10 @@ router.get('/ping/:r_arus/:r_tegangan/:s_arus/:s_tegangan/:t_arus/:t_tegangan', 
   var sTegangan = req.params.s_tegangan;
   var tArus = req.params.t_arus;
   var tTegangan = req.params.t_tegangan;
-  status_table.findAll().then(statusTableAll => {
+  statusV2_table.findAll().then(statusTableAll => {
     var preStatus = false;
     if (statusTableAll.length == 0) {
-      status_table.create({
+      statusV2_table.create({
         r_arus: rArus,
         r_tegangan: rTegangan,
         s_arus: sArus,
@@ -72,7 +72,7 @@ router.get('/ping/:r_arus/:r_tegangan/:s_arus/:s_tegangan/:t_arus/:t_tegangan', 
         notes: "sample notes"
       })
     } else {
-      status_table.update({
+      statusV2_table.update({
         r_arus: rArus,
         r_tegangan: rTegangan,
         s_arus: sArus,
@@ -104,9 +104,9 @@ router.get('/ping-off/:status_r/:status_s/:status_t', function (req, res, next) 
   var status_r = req.params.status_r;
   var status_s = req.params.status_s;
   var status_t = req.params.status_t;
-  status_table.findAll().then(statusTableAll => {
+  statusV2_table.findAll().then(statusTableAll => {
     if (statusTableAll.length != 0) {
-      status_table.update({
+      statusV2_table.update({
         status_r: status_r,
         status_s: status_s,
         status_t: status_t
@@ -125,7 +125,7 @@ router.get('/ping-off/:status_r/:status_s/:status_t', function (req, res, next) 
 })
 
 router.get('/dashboard', function(req, res, next) {
-  status_table.findAll().then(statusTableAll => {
+  statusV2_table.findAll().then(statusTableAll => {
     res.render('dashboard', {
       dData: statusTableAll[0]
     });
@@ -133,7 +133,7 @@ router.get('/dashboard', function(req, res, next) {
 });
 
 router.get('/dashboard-admin', function(req, res, next) {
-  status_table.findAll().then(statusTableAll => {
+  statusV2_table.findAll().then(statusTableAll => {
     res.render('dashboard-admin', {
       dData: statusTableAll[0]
     });
@@ -142,11 +142,11 @@ router.get('/dashboard-admin', function(req, res, next) {
 
 router.post('/update', function(req, res, next) {
   console.log(req.body)
-  status_table.findAll().then(statusTableAll => {
+  statusV2_table.findAll().then(statusTableAll => {
     if (statusTableAll.length == 0) {
       console.log('null')
     } else {
-      status_table.update({
+      statusV2_table.update({
         status_r: req.body.status_r,
         status_s: req.body.status_s,
         status_t: req.body.status_t,

@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const statusModel = require('./models/status')
+const statusV2Model = require('./models/status-v2')
 
 var sequelize_db;
 
@@ -24,6 +25,7 @@ if (process.env.DATABASE_URL === undefined) {
 
 
 const status_table = statusModel(sequelize_db, Sequelize)
+const statusV2_table = statusV2Model(sequelize_db, Sequelize)
 
 sequelize_db.sync()
   .then(() => {
@@ -31,5 +33,6 @@ sequelize_db.sync()
     })
 
 module.exports = {
-    status_table
+	status_table,
+	statusV2_table
 }
