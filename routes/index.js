@@ -43,9 +43,11 @@ router.post('/ping', function(req, res, next) {
         }
       });
     }
-    res.status(200).send(
-      statusTableAll[0]
-    );
+    res.status(200).send({
+      status_r: statusTableAll[0].status_r,
+      status_s: statusTableAll[0].status_s,
+      status_t: statusTableAll[0].status_t
+    });
   });
 });
 
@@ -60,11 +62,11 @@ router.get('/ping/:r_arus/:r_tegangan/:s_arus/:s_tegangan/:t_arus/:t_tegangan', 
     var preStatus = false;
     if (statusTableAll.length == 0) {
       statusV2_table.create({
-        r_arus: rArus,
+        r_arus: parseFloat(rArus).toFixed(2),
         r_tegangan: rTegangan,
-        s_arus: sArus,
+        s_arus: parseFloat(sArus).toFixed(2),
         s_tegangan: sTegangan,
-        t_arus: tArus,
+        t_arus: parseFloat(tArus).toFixed(2),
         t_tegangan: tTegangan,
         status_r: preStatus,
         status_s: preStatus,
@@ -73,11 +75,11 @@ router.get('/ping/:r_arus/:r_tegangan/:s_arus/:s_tegangan/:t_arus/:t_tegangan', 
       })
     } else {
       statusV2_table.update({
-        r_arus: rArus,
+        r_arus: parseFloat(rArus).toFixed(2),
         r_tegangan: rTegangan,
-        s_arus: sArus,
+        s_arus: parseFloat(sArus).toFixed(2),
         s_tegangan: sTegangan,
-        t_arus: tArus,
+        t_arus: parseFloat(tArus).toFixed(2),
         t_tegangan: tTegangan
       }, {
         where: {
@@ -86,16 +88,9 @@ router.get('/ping/:r_arus/:r_tegangan/:s_arus/:s_tegangan/:t_arus/:t_tegangan', 
       });
     }
     res.status(200).send({
-        r_arus: rArus,
-        r_tegangan: rTegangan,
-        s_arus: sArus,
-        s_tegangan: sTegangan,
-        t_arus: tArus,
-        t_tegangan: tTegangan,
         status_r: statusTableAll[0].status_r,
         status_s: statusTableAll[0].status_s,
-        status_t: statusTableAll[0].status_t,
-        notes: statusTableAll[0].notes
+        status_t: statusTableAll[0].status_t
     });
   });
 })
