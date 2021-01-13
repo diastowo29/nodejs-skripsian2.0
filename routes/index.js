@@ -44,9 +44,9 @@ router.post('/ping', function(req, res, next) {
       });
     }
     res.status(200).send({
-      status_r: '"' + statusTableAll[0].status_r + '"',
-      status_s: '"' + statusTableAll[0].status_s + '"',
-      status_t: '"' + statusTableAll[0].status_t + '"'
+      status_r: statusTableAll[0].status_r.toString(),
+      status_s: statusTableAll[0].status_s.toString(),
+      status_t: statusTableAll[0].status_t.toString()
     });
   });
 });
@@ -88,9 +88,9 @@ router.get('/ping/:r_arus/:r_tegangan/:s_arus/:s_tegangan/:t_arus/:t_tegangan', 
       });
     }
     res.status(200).send({
-        status_r: '"' + statusTableAll[0].status_r + '"',
-        status_s: '"' + statusTableAll[0].status_s + '"',
-        status_t: '"' + statusTableAll[0].status_t + '"'
+        status_r: statusTableAll[0].status_r.toString(),
+        status_s: statusTableAll[0].status_s.toString(),
+        status_t: statusTableAll[0].status_t.toString()
     });
   });
 })
