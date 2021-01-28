@@ -113,6 +113,14 @@ router.get('/arus-download', function(req, res, next) {
     let workbook = new excel.Workbook();
     let worksheet = workbook.addWorksheet("Tutorials");
 
+    aruss.forEach(arus => {
+      var date = new Date(arus.createdAt);
+      date.setHours(date.getHours() + 7);
+      arus['new_createdAt'] = new Date(date).toISOString()
+    });
+
+    console.log(aruss)
+
     worksheet.columns = [
       { header: "Id", key: "id", width: 5 },
       { header: "Arus R", key: "r_arus", width: 10 },
@@ -121,6 +129,7 @@ router.get('/arus-download', function(req, res, next) {
       { header: "Tegangan S", key: "s_tegangan", width: 10 },
       { header: "Arus T", key: "t_arus", width: 10 },
       { header: "Tegangan T", key: "t_tegangan", width: 10 },
+      { header: "Time", key: "new_createdAt", width: 10 },
     ];
 
     // Add Array Rows
@@ -192,6 +201,25 @@ router.get('/dashboard-admin', function(req, res, next) {
     })
   })
 });
+
+router.get('/get-all', function(req, res, next) {
+  arusTeganganTable.findAll().then(aruss => {
+    var arusLastIndex = (aruss.length-1);
+    statusGarduTable.findAll().then(statusTableAll => {
+      notesTable.findAll().then(notess => {
+        statusPingTable.findAll().then(statusPings => {
+          res.status(200).send({
+            arus_tegangan: aruss[arusLastIndex],
+            status: statusTableAll[0],
+            status_ping: statusPings[0],
+            notes: notess[0]
+          })
+        })
+      })
+    })
+  })
+});
+
 
 router.post('/update', function(req, res, next) {
   statusGarduTable.findAll().then(statusGardus => {

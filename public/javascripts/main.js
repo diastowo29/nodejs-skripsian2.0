@@ -1,11 +1,16 @@
+setInterval(function() {
+    reloadData();
+    // $('#r_arus').html('test')
+    // console.log('reload')
+}, 5 * 1000);
+
 function submitUpdate () {
     var updatePayload = {
-        status_r: $('#toggle-r').prop('checked'),
-        status_s: $('#toggle-s').prop('checked'),
-        status_t: $('#toggle-t').prop('checked'),
+        status_r: $('#status_r').prop('checked'),
+        status_s: $('#status_s').prop('checked'),
+        status_t: $('#status_t').prop('checked'),
         notes: $('#notes-input').val()
     }
-    console.log(updatePayload)
     
     $.ajax({
         url: "/update",
@@ -33,6 +38,54 @@ function clearData () {
     })
 }
 
+Date.prototype.addHours = function(hours, timeS) {
+    var date = new Date(timeS);
+    date.setDate(date.getHours() + hours);
+    return date;
+}
+
+function reloadData () {
+    // console.log(new Date());
+    $.ajax({
+        url: "/get-all",
+        type: 'get',
+        contentType: "application/json",
+        dataType: 'json',
+        success: function(result){
+            console.log(result);
+
+            $('#r_arus').html(result.arus_tegangan.r_arus)
+            $('#r_tegangan').html(result.arus_tegangan.r_tegangan)
+            $('#s_arus').html(result.arus_tegangan.s_arus)
+            $('#s_tegangan').html(result.arus_tegangan.s_tegangan)
+            $('#t_arus').html(result.arus_tegangan.t_arus)
+            $('#t_tegangan').html(result.arus_tegangan.t_tegangan)
+
+            if (result.status.status_r) {
+                $('#status_r').parent().removeClass('off');
+            } else {
+                $('#status_r').parent().addClass('off');
+            }
+            if (result.status.status_s) {
+                $('#status_s').parent().removeClass('off');
+            } else {
+                $('#status_s').parent().addClass('off');
+            }
+            if (result.status.status_t) {
+                $('#status_t').parent().removeClass('off');
+            } else {
+                $('#status_t').parent().addClass('off');
+            }
+
+            $("#status_pingoff_r").attr("hidden", result.status_ping.status_r);
+            $("#status_pingoff_s").attr("hidden", result.status_ping.status_s);
+            $("#status_pingoff_t").attr("hidden", result.status_ping.status_t);
+
+            generateChart();
+        }
+    })
+}
+
 function downloadData () {
     window.open("/arus-download");
 }
@@ -54,9 +107,13 @@ function generateChart () {
             var newTArus = [];
             var newTTegangan = [];
             result.forEach(arus => {
+                
+                var date = new Date(arus.createdAt);
+                date.setHours(date.getHours() + 7);
+
                 var newXLabel = [];
-                newXLabel.push(arus.createdAt.toString().split('T')[0])
-                newXLabel.push(arus.createdAt.toString().split('T')[1])
+                newXLabel.push(new Date(date).toISOString().toString().split('T')[0])
+                newXLabel.push(new Date(date).toISOString().toString().split('T')[1])
                 newRArusLabel.push(newXLabel)
                 newRArus.push(arus.r_arus)
                 newRTegangan.push(arus.r_tegangan)

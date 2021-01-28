@@ -15,49 +15,52 @@ block content
             th 
           tr
             td R
-            td #{dData.r_arus}
-            td #{dData.r_tegangan}
+            td(id='r_arus') #{dData.r_arus}
+            td(id='r_tegangan') #{dData.r_tegangan}
             if statuses.status_r
                 td 
-                  input(type="checkbox" id='toggle-r' checked data-toggle="toggle")
+                  input(id='status_r' type="checkbox" checked data-toggle="toggle")
             else
                 td 
-                  input(type="checkbox" id='toggle-r' data-toggle="toggle")
+                  input(id='status_r' type="checkbox" data-toggle="toggle")
             if !status_pings.status_r
                 td 
-                  input(class='btn btn-danger rounded-circle' type='button')
+                  input(id='status_pingoff_r' class='btn btn-danger rounded-circle' type='button')
             else
                 td
+                  input(id='status_pingoff_r' class='btn btn-danger rounded-circle' type='button' hidden)
           tr
             td S
-            td #{dData.s_arus}
-            td #{dData.s_tegangan}
+            td(id='s_arus') #{dData.s_arus}
+            td(id='s_tegangan') #{dData.s_tegangan}
             if statuses.status_s
                 td 
-                  input(type="checkbox" id='toggle-s' checked data-toggle="toggle")
+                  input(id='status_s' type="checkbox" checked data-toggle="toggle")
             else
                 td 
-                  input(type="checkbox" id='toggle-s' data-toggle="toggle")
+                  input(id='status_s' type="checkbox" data-toggle="toggle")
             if !status_pings.status_s
                 td 
-                  input(class='btn btn-danger rounded-circle' type='button')
+                  input(id='status_pingoff_s' class='btn btn-danger rounded-circle' type='button')
             else
                 td
+                  input(id='status_pingoff_s' class='btn btn-danger rounded-circle' type='button' hidden)
           tr
             td T
-            td #{dData.t_arus}
-            td #{dData.t_tegangan}
+            td(id='t_arus') #{dData.t_arus}
+            td(id='t_tegangan') #{dData.t_tegangan}
             if statuses.status_t
                 td 
-                  input(type="checkbox" id='toggle-t' checked data-toggle="toggle")
+                  input(id='status_t' type="checkbox" checked data-toggle="toggle")
             else
                 td 
-                  input(type="checkbox" id='toggle-t' data-toggle="toggle")
+                  input(id='status_t' type="checkbox" data-toggle="toggle")
             if !status_pings.status_t
                 td 
-                  input(class='btn btn-danger rounded-circle' type='button')
+                  input(id='status_pingoff_t' class='btn btn-danger rounded-circle' type='button')
             else
                 td
+                  input(id='status_pingoff_t' class='btn btn-danger rounded-circle' type='button' hidden)
 
     div(class='form-input form-inline col-md-6')
       label(for='notes-input') Notes : 
