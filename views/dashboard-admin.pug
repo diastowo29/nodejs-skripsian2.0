@@ -12,41 +12,66 @@ block content
             th Arus
             th Tegangan
             th Switch
+            th 
           tr
             td R
             td #{dData.r_arus}
             td #{dData.r_tegangan}
-            if dData.status_r
+            if statuses.status_r
                 td 
                   input(type="checkbox" id='toggle-r' checked data-toggle="toggle")
             else
                 td 
                   input(type="checkbox" id='toggle-r' data-toggle="toggle")
+            if !status_pings.status_r
+                td 
+                  input(class='btn btn-danger rounded-circle' type='button')
+            else
+                td
           tr
             td S
             td #{dData.s_arus}
             td #{dData.s_tegangan}
-            if dData.status_s
+            if statuses.status_s
                 td 
                   input(type="checkbox" id='toggle-s' checked data-toggle="toggle")
             else
                 td 
                   input(type="checkbox" id='toggle-s' data-toggle="toggle")
+            if !status_pings.status_s
+                td 
+                  input(class='btn btn-danger rounded-circle' type='button')
+            else
+                td
           tr
             td T
             td #{dData.t_arus}
             td #{dData.t_tegangan}
-            if dData.status_t
+            if statuses.status_t
                 td 
                   input(type="checkbox" id='toggle-t' checked data-toggle="toggle")
             else
                 td 
                   input(type="checkbox" id='toggle-t' data-toggle="toggle")
-    
-  p Notes : 
-  div(class='form-input form-inline')
-    input(type='text' id='notes-input' class='form-control col-md-3' value=dData.notes)
-    input(type='button' class='btn btn-info' value='Submit' onclick='submitUpdate()')
+            if !status_pings.status_t
+                td 
+                  input(class='btn btn-danger rounded-circle' type='button')
+            else
+                td
 
-  //- script(src="/javascripts/bundle.js")
+    div(class='form-input form-inline col-md-6')
+      label(for='notes-input') Notes : 
+      input(type='text' style="margin-left: 10px;" id='notes-input' class='form-control col-md-3' value=notes.notes)
+      input(type='button' style="margin-left: 10px;" class='btn btn-info' value='Submit' onclick='submitUpdate()')
+    div(class='row col-md-6')
+      div(class='col-md-6')
+        canvas(id="rArusChart" width="200" height="200")
+      div(class='col-md-6')
+        canvas(id="rTeganganChart" width="200" height="200")
+    div(class='col-md-6')
+      input(class='btn btn-warning' type='button' onclick='clearData()' value='Clear Data')
+      input(class='btn btn-info' style="margin-left: 10px;" onclick='downloadData()' type='button' value='Download Data')
+    
+
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js")
   script(src="/javascripts/main.js")
