@@ -175,10 +175,13 @@ router.get('/dashboard', function(req, res, next) {
     var arusLastIndex = (aruss.length-1);
     statusGarduTable.findAll().then(statusTableAll => {
       notesTable.findAll().then(notess => {
-        res.render('dashboard', {
-          dData: aruss[arusLastIndex],
-          notes: notess[0]
-        });
+        statusPingTable.findAll().then(statusPings => {
+          res.render('dashboard', {
+            dData: aruss[arusLastIndex],
+            status_pings: statusPings[0],
+            notes: notess[0]
+          });
+        })
       })
     })
   })

@@ -11,23 +11,47 @@ block content
             th Beban
             th Arus
             th Tegangan
+            th 
           tr
             td R
-            td #{dData.r_arus}
-            td #{dData.r_tegangan}
+            td(id='r_arus') #{dData.r_arus}
+            td(id='r_tegangan') #{dData.r_tegangan}
+            if !status_pings.status_r
+                td 
+                  input(id='status_pingoff_r' class='btn btn-danger rounded-circle' type='button')
+            else
+                td
+                  input(id='status_pingoff_r' class='btn btn-danger rounded-circle' type='button' hidden)
           tr
             td S
-            td #{dData.s_arus}
-            td #{dData.s_tegangan}
+            td(id='s_arus') #{dData.s_arus}
+            td(id='s_tegangan') #{dData.s_tegangan}
+            if !status_pings.status_s
+                td 
+                  input(id='status_pingoff_s' class='btn btn-danger rounded-circle' type='button')
+            else
+                td
+                  input(id='status_pingoff_s' class='btn btn-danger rounded-circle' type='button' hidden)
           tr
             td T
-            td #{dData.t_arus}
-            td #{dData.t_tegangan}
-    
-  p Notes : 
-  div(class='form-input form-inline')
-    input(type='text' id='notes-input' class='form-control col-md-3' disabled value=notes.notes)
+            td(id='t_arus') #{dData.t_arus}
+            td(id='t_tegangan') #{dData.t_tegangan}
+            if !status_pings.status_t
+                td 
+                  input(id='status_pingoff_t' class='btn btn-danger rounded-circle' type='button')
+            else
+                td
+                  input(id='status_pingoff_t' class='btn btn-danger rounded-circle' type='button' hidden)
+    div(class="col-md-6") 
+      p Notes : 
+      div(class='form-input form-inline')
+        input(type='text' id='notes-input' class='form-control col-md-3' disabled value=notes.notes)
+    div(class='row col-md-6')
+      div(class='col-md-6')
+        canvas(id="rArusChart" width="200" height="200")
+      div(class='col-md-6')
+        canvas(id="rTeganganChart" width="200" height="200")
     //- input(type='button' class='btn btn-info' value='Submit' onclick='submitUpdate()')
 
-  //- script(src="/javascripts/bundle.js")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js")
   script(src="/javascripts/main.js")
